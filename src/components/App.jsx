@@ -8,25 +8,19 @@ export class App extends Component {
   state = {
     good: 0,
     neutral: 0,
-    bad: 0
+    bad: 0,
   }
 
-  handleClick = (evt) => {
-    const tg = evt.target.id;
-    switch(tg){
-      case 'good': 
-        this.setState({good: this.state.good +1});
-        break;
-      case 'neutral':
-        this.setState({neutral: this.state.neutral +1});
-        break;
-      case 'bad':
-        this.setState({bad: this.state.bad +1});
-        break;
-      default: 
-        return;
-    }
-}
+  handleClick = evt => {
+    const name = evt.target.id;
+
+    this.setState(prevState =>
+      { return{
+        [name]: prevState[name] + 1
+      }
+    });
+  }
+  
 
   countTotalFeedback = () =>{
     const total = this.state.good+this.state.neutral+this.state.bad;
@@ -45,7 +39,7 @@ export class App extends Component {
       <Section title='Please leave a feedback'>
         
       <FeedbackOptions
-      options={this.state} 
+      options={Object.keys(this.state)} 
       onLeaveFeedback={this.handleClick}>
       </FeedbackOptions>
       </Section>
